@@ -1,7 +1,7 @@
 package com.example.springbootdemo.service;
 
 import com.example.springbootdemo.entity.User;
-import com.example.springbootdemo.model.users.RegisterUserRequest;
+import com.example.springbootdemo.model.users.request.RegisterUserRequest;
 import com.example.springbootdemo.repository.UserRepository;
 import com.example.springbootdemo.security.BCrypt;
 import jakarta.transaction.Transactional;
@@ -21,15 +21,11 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private Validator validator;
+    private ValidationService validationService;
 
     @Transactional
     public void register(RegisterUserRequest userRequest) {
-        Set<ConstraintViolation<RegisterUserRequest>> constrainViolations = validator.validate(userRequest);
-
-        if (constrainViolations.size() != 0) {
-            throw new ConstraintViolationException(constrainViolations);
-        }
+        validationService.validate(userRequest);
 
         if (userRepository.existsById(userRequest.getUsername())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username not available");

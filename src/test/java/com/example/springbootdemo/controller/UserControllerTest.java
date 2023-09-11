@@ -2,7 +2,7 @@ package com.example.springbootdemo.controller;
 
 import com.example.springbootdemo.entity.User;
 import com.example.springbootdemo.model.WebResponse;
-import com.example.springbootdemo.model.users.RegisterUserRequest;
+import com.example.springbootdemo.model.users.request.RegisterUserRequest;
 import com.example.springbootdemo.repository.UserRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

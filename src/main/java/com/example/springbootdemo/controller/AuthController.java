@@ -1,8 +1,9 @@
 package com.example.springbootdemo.controller;
 
 import com.example.springbootdemo.model.WebResponse;
-import com.example.springbootdemo.model.users.request.RegisterUserRequest;
-import com.example.springbootdemo.service.UserService;
+import com.example.springbootdemo.model.users.request.LoginRequest;
+import com.example.springbootdemo.model.users.response.TokenResponse;
+import com.example.springbootdemo.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,20 +11,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class UserController {
+public class AuthController {
     @Autowired
-    private UserService userService;
+    private AuthService authService;
 
     @PostMapping(
-            path = "/api/users",
+            path = "/auth/login",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public WebResponse<String> register(@RequestBody RegisterUserRequest request) {
-        userService.register(request);
-        return WebResponse.<String>builder()
+    public WebResponse<TokenResponse> login(@RequestBody LoginRequest request) {
+        TokenResponse tokenResponse = authService.login(request);
+        return WebResponse.<TokenResponse>builder()
                 .success(true)
-                .data("OK")
+                .data(tokenResponse)
                 .build();
     }
 }
