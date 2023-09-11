@@ -2,19 +2,21 @@ package com.example.springbootdemo.model.users;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class RegisterUserRequest {
     @NotBlank
     @Size(max = 100)
-    private String username;
+    public String username;
 
     @NotBlank
     @Size(max = 100)
-    private String password;
+    public String password;
 
     @NotBlank
     @Size(max = 100)
-    private String name;
+    public String name;
 }
