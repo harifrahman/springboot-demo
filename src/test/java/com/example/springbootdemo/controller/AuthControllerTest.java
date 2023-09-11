@@ -38,7 +38,7 @@ class AuthControllerTest {
     }
 
     @Test
-    void GivenWrongUsernamePasswordWhenUserNotFoundThenReturnErrorUnauthorized() throws Exception {
+    void GivenUsernamePasswordWhenUserNotFoundThenReturnErrorUnauthorized() throws Exception {
         LoginRequest request = LoginRequest.builder()
                 .password("secret")
                 .username("user-arh")
@@ -58,5 +58,13 @@ class AuthControllerTest {
             assertNotNull(response.getError());
             assertFalse(response.isSuccess());
         });
+    }
+
+    @Test
+    void GivenWrongUsernamePasswordWhenAuthCallThenReturnErrorWrongPassword() throws Exception {
+    }
+
+    @Test
+    void GivenCorrectUsernamePasswordWhenAuthCallThenReturnSuccess() throws Exception {
     }
 }
