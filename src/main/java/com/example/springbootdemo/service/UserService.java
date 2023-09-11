@@ -4,6 +4,7 @@ import com.example.springbootdemo.entity.User;
 import com.example.springbootdemo.exception.ApiException;
 import com.example.springbootdemo.model.users.RegisterUserRequest;
 import com.example.springbootdemo.repository.UserRepository;
+import com.example.springbootdemo.security.BCrypt;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -36,10 +37,12 @@ public class UserService {
         User user = new User();
         user.setUsername(userRequest.getUsername());
         user.setName(userRequest.getName());
-
-        // TODO: we need to encrypt this, or user will laugh hard :D
-        user.setPassword(userRequest.getPassword());
+        user.setPassword(encryptPassword(userRequest));
 
         userRepository.save(user);
+    }
+
+    private static String encryptPassword(RegisterUserRequest userRequest) {
+        return BCrypt.hashpw(userRequest.getPassword(), BCrypt.gensalt());
     }
 }
