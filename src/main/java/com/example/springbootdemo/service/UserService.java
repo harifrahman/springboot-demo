@@ -1,7 +1,6 @@
 package com.example.springbootdemo.service;
 
 import com.example.springbootdemo.entity.User;
-import com.example.springbootdemo.exception.ApiException;
 import com.example.springbootdemo.model.users.RegisterUserRequest;
 import com.example.springbootdemo.repository.UserRepository;
 import com.example.springbootdemo.security.BCrypt;
@@ -10,7 +9,9 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Set;
 
@@ -31,7 +32,7 @@ public class UserService {
         }
 
         if (userRepository.existsById(userRequest.getUsername())) {
-            throw new ApiException("Username not available");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username not available");
         }
 
         User user = new User();
